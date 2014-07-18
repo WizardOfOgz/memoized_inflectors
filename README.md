@@ -1,0 +1,3 @@
+# MemoizedInflectors
+
+Memoizes inflected strings.

@@ -1,0 +1,2 @@
+module MemoizedInflectors
+end
