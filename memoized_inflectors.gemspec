@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = MemoizedInflectors::VERSION
   s.authors     = ["Andy Ogzewalla"]
   s.email       = ["andyogzewalla@gmail.com"]
-  s.homepage    = "TODO"
+  s.homepage    = "https://github.com/WizardOfOgz/memoized_inflectors"
   s.summary     = "Memoizes inflected strings."
   s.description = <<DESCRIPTION
 Memoizes inflected strings.
@@ -18,5 +18,5 @@ DESCRIPTION
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "rails", "~> 4.0"
+  s.add_dependency "activesupport", "~> 4.0"
 end
