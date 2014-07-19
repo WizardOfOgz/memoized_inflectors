@@ -21,9 +21,10 @@ module MemoizedInflectors
   end
 
   INFLECTOR_METHODS.each do |inflector_name|
-    define_method inflector_name do
+    define_method inflector_name do |*args|
       memoized_inflections = self.class.instance_variable_get("@#{ inflector_name }")
-      memoized_inflections.has_key?(self) ? memoized_inflections[self] : memoized_inflections[self] = super()
+      key = [self, *args].hash
+      memoized_inflections.has_key?(key) ? memoized_inflections[key] : memoized_inflections[key] = super(*args)
     end
   end
 end
