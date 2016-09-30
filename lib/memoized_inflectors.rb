@@ -3,6 +3,9 @@ require "active_support/inflector"
 require "active_support/core_ext/string"
 
 module MemoizedInflectors
+  class << self
+    attr_accessor :disabled
+  end
 
   DUP_UNSAFE = %i[constantize safe_constantize].freeze
 
@@ -26,6 +29,7 @@ module MemoizedInflectors
 
   inflector_methods.each do |inflector|
     define_method(inflector) do |*args|
+      return super(*args) if ::MemoizedInflectors.disabled
       memoized_inflections = self.class.instance_variable_get("@#{ inflector }")
       key = [self, inflector, *args].hash
 
