@@ -2,3 +2,6 @@ language: ruby
 rvm:
  - 2.3.1
 script: bundle exec rspec --format documentation --order random --color
+addons:
+  code_climate:
+    repo_token: 8bf938938d623a9dfd0769c74c09e24cea65a50f8228b10f32bfdac46d59f5ac

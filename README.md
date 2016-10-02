@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/WizardOfOgz/memoized_inflectors.svg?branch=master)](https://travis-ci.org/WizardOfOgz/memoized_inflectors) [![Code Climate](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors/badges/gpa.svg)](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors) [![Test Coverage](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors/badges/coverage.svg)](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors/coverage)
+
 # Memoized Inflectors
 
 This gem caches the results of ActiveSupport's String inflector methods, such as `tableize`, `constantize`, `underscore`, `pluralize`, etc. These methods are used inside Rails and are also useful for meta-programming. In the applications I analyzed the same values were being repeatedly inflected, especially across requests, and I realized that caching the results could save a lot of time and computation.
