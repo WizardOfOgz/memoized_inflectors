@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/WizardOfOgz/memoized_inflectors.svg?branch=master)](https://travis-ci.org/WizardOfOgz/memoized_inflectors) [![Code Climate](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors/badges/gpa.svg)](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors) [![Test Coverage](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors/badges/coverage.svg)](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors/coverage)
+[![Build Status](https://travis-ci.org/WizardOfOgz/memoized_inflectors.svg?branch=master)](https://travis-ci.org/WizardOfOgz/memoized_inflectors) [![Code Climate](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors/badges/gpa.svg)](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors)
 
 # Memoized Inflectors
 

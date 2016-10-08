@@ -1,4 +1,7 @@
 .bundle/
 .rspec
 Gemfile.lock
+Gemfile.local
 spec/examples.txt
+coverage/
+tmp/
