@@ -1,3 +1,7 @@
+# Run local config, if present
+filename = File.expand_path("../spec_helper.local.rb", __FILE__)
+instance_eval(File.read(filename)) if File.exists?(filename)
+
 require "memoized_inflectors"
 
 RSpec.configure do |config|
