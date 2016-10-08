@@ -7,16 +7,16 @@ require "memoized_inflectors/version"
 Gem::Specification.new do |s|
   s.name        = "memoized_inflectors"
   s.version     = MemoizedInflectors::VERSION
-  s.authors     = ["Andy Ogzewalla"]
+  s.authors     = ["Andrew Ogzewalla"]
   s.email       = ["andyogzewalla@gmail.com"]
   s.homepage    = "https://github.com/WizardOfOgz/memoized_inflectors"
-  s.summary     = "Memoizes inflected strings."
+  s.summary     = "Memoizes ActiveSupport inflector methods."
   s.description = <<DESCRIPTION
-Memoizes inflected strings.
+Memoizes ActiveSupport inflector methods.
 DESCRIPTION
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["lib/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
 
   s.add_dependency "activesupport", "~> 4.0"
   s.add_dependency "lru_redux",     "~> 1.1"

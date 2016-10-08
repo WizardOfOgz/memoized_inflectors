@@ -4,6 +4,9 @@ require "active_support/core_ext/string"
 require "active_support/core_ext/integer"
 require "lru_redux"
 
+require "memoized_inflectors/string_methods"
+require "memoized_inflectors/integer_methods"
+
 module MemoizedInflectors
   class << self
     attr_accessor :disabled
@@ -29,8 +32,11 @@ module MemoizedInflectors
   end
 
   # Returns a unique key for the given arguments.
-  #
   def self.key_for(*args)
+    # Using Object#hash rather than MD5 or SHA because it works on arrays, it is faster, and it
+    # also works correctly with hashes without manipulation. I.e. it is simply easier. This method
+    # works since there is no intention of persisting the cache or sharing it across VM instances.
+    args.hash
   end
 
   # Clears the cache for the specified inflector. If no inflector
@@ -42,57 +48,9 @@ module MemoizedInflectors
   def self.inflector_methods
     ::ActiveSupport::Inflector.instance_methods
   end
+end
 
-  module StringMethods
-    INFLECTORS = [
-      *%i[
-        camelize   classify    dasherize deconstantize
-        demodulize foreign_key humanize  parameterize
-        pluralize  singularize tableize  titleize
-        to_param   underscore
-      ].freeze,
-      *DUP_UNSAFE_INFLECTORS = %i[constantize safe_constantize].freeze
-    ]
-
-    # Define an instance method for each inflector, e.g. `signularize`, `constantize`, etc.
-    (INFLECTORS | ::ActiveSupport::Inflector.instance_methods).each do |inflector|
-      define_method(inflector) do |*args|
-        return super(*args) if ::MemoizedInflectors.disabled
-        cache = ::MemoizedInflectors.cache_for(inflector)
-        key = [self, *args].hash
-
-        result =
-          if cache.has_key?(key)
-            cache[key]
-          else
-            cache[key] = super(*args)
-          end
-
-        (DUP_UNSAFE_INFLECTORS.include?(inflector) || result.nil?) ? result : result.dup
-      end
-    end
-  end
-
-  module IntegerMethods
-    INFLECTORS = %i[ordinalize ordinal].freeze
-
-    # Define an instance method for each inflector, e.g. `signularize`, `constantize`, etc.
-    (INFLECTORS | ::ActiveSupport::Inflector.instance_methods).each do |inflector|
-      define_method(inflector) do |*args|
-        return super(*args) if ::MemoizedInflectors.disabled
-        cache = ::MemoizedInflectors.cache_for(inflector)
-        key = [self, *args].hash
-
-        if cache.has_key?(key)
-          cache[key]
-        else
-          cache[key] = super(*args)
-        end
       end
     end
   end
 end
-
-::String.send(:prepend, ::MemoizedInflectors::StringMethods)
-::Integer.send(:prepend, ::MemoizedInflectors::IntegerMethods)
-
