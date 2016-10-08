@@ -2,18 +2,19 @@ require "active_support"
 require "active_support/inflector"
 require "active_support/core_ext/string"
 require "active_support/core_ext/integer"
+require "lru_redux"
 
 module MemoizedInflectors
   class << self
     attr_accessor :disabled
   end
 
-  def self.cache_klass
-    ::Hash
+  def self.new_cache_instance
+    ::LruRedux::ThreadSafeCache.new(1000)  # TODO: allow users to configure the class (e.g. ThreadSafe vs non-ThreadSafe) and max size *
   end
 
   def self.caches
-    @caches ||= ::Hash.new { |h,k| h[k] = cache_klass.new }
+    @caches ||= ::Hash.new { |h,k| h[k] = new_cache_instance }
   end
 
   # Returns the cache for the given inflector. Currently inflector names must

@@ -39,6 +39,22 @@ RSpec.describe ::MemoizedInflectors do
         expect(original.camelize(false)).to be_nil  # Cached value
       end
     end
+
+    it "caches only up to the maximum size" do
+      (1..1000).each do |i|
+        "derp-#{ i }".underscore
+      end
+
+      expect(described_class.cache_for(:underscore).to_a.map(&:last)).to include("derp_1")
+
+      "one more thing".underscore  # This should bump the first item out of the cache.
+
+      aggregate_failures do
+        cached_values = described_class.cache_for(:underscore).to_a.map(&:last)
+        expect(cached_values).to_not include("derp_1")  # The first value should be removed from the cache.
+        expect(cached_values).to include("derp_2")      # But the second value should still be there.
+      end
+    end
   end
 
   describe "IntegerMethods" do
