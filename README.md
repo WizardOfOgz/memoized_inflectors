@@ -4,11 +4,21 @@
 
 This gem caches the results of ActiveSupport's String inflector methods, such as `tableize`, `constantize`, `underscore`, `pluralize`, etc. These methods are used inside Rails and are also useful for meta-programming. In the applications I analyzed the same values were being repeatedly inflected, especially across requests, and I realized that caching the results could save a lot of time and computation.
 
-
 ## Installation
 
-Add `gem "memoized_inflectors"` to your Gemfile.
+Add this line to your application's Gemfile:
 
+```ruby
+gem 'memoized_inflectors'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install memoized_inflectors
 
 ## Benchmarks
 
@@ -38,6 +48,21 @@ disabled  2.200000   0.010000   2.210000 (  2.206597)
 
 A quick check in one of my bigger Rails projects showed that for some requests inflector methods were called over 7,000 times! In some cases using memoization made responses nearly 100ms quicker! Adding memoization was an easy way to get a nice performance boost.
 
-## TODO
+## TODOs
 
-* Back memoizations with an thread-safe LRU cache.
+* Allow customization of the features. E.g. let the user specify the cache store.
+* Add builds for multiple ruby versions and platforms.
+
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/WizardOfOgz/memoized_inflectors. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
