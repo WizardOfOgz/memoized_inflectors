@@ -60,8 +60,3 @@ module MemoizedInflectors
     ::ActiveSupport::Inflector.instance_methods
   end
 end
-
-      end
-    end
-  end
-end
