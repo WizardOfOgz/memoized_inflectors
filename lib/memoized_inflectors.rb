@@ -42,7 +42,7 @@ module MemoizedInflectors
   # Clears the cache for the specified inflector. If no inflector
   # is specified, then all caches are cleared.
   def self.clear_cache(inflector = nil)
-    inflector ? caches[inflector].clear : caches.clear
+    inflector ? caches[inflector].clear : caches.values.each(&:clear)
   end
 
   def self.inflector_methods

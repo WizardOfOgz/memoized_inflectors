@@ -71,4 +71,34 @@ RSpec.describe ::MemoizedInflectors do
       end
     end
   end
+
+  describe ".clear_cache" do
+    it "clears individual cache when given an inflector name" do
+      "lorem_ipsum".classify.underscore
+
+      expect(described_class.cache_for(:classify).count).to be > 0
+      expect(described_class.cache_for(:underscore).count).to be > 0
+
+      described_class.clear_cache(:classify)
+
+      aggregate_failures do
+        expect(described_class.cache_for(:classify).count).to eq(0)
+        expect(described_class.cache_for(:underscore).count).to be > 0  # This cache should not have been cleared.
+      end
+    end
+
+    it "clears all caches when called without arguments" do
+      "lorem_ipsum".dasherize.titleize
+
+      expect(described_class.cache_for(:dasherize).count).to be > 0
+      expect(described_class.cache_for(:titleize).count).to be > 0
+
+      described_class.clear_cache
+
+      aggregate_failures do
+        expect(described_class.cache_for(:dasherize).count).to eq(0)
+        expect(described_class.cache_for(:titleize).count).to eq(0)
+      end
+    end
+  end
 end
