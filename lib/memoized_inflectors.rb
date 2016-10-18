@@ -39,10 +39,21 @@ module MemoizedInflectors
     args.hash
   end
 
-  # Clears the cache for the specified inflector. If no inflector
+  # Clears the cache for the specified inflector(s). If no inflector
   # is specified, then all caches are cleared.
-  def self.clear_cache(inflector = nil)
-    inflector ? caches[inflector].clear : caches.values.each(&:clear)
+  #
+  #=== Examples
+  #   MemoizedInflectors.clear_cache                           # Clears everything.
+  #   MemoizedInflectors.clear_cache(:classify)                # Clear only the :classify cache.
+  #   MemoizedInflectors.clear_cache(:classify, :underscore)   # Clears both the :classify and :underscore caches.
+  def self.clear_cache(*inflectors)
+    if inflectors.any?
+      inflectors.each do |inflector|
+        cache_for(inflector).clear
+      end
+    else
+      caches.values.each(&:clear)
+    end
   end
 
   def self.inflector_methods
