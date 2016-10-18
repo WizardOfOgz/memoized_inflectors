@@ -20,6 +20,30 @@ Or install it yourself as:
 
     $ gem install memoized_inflectors
 
+## Usage
+
+After requiring `memoized_inflectors` all supported inflector method will be memoized.
+
+### Clearing Cache
+
+```ruby
+MemoizedInflectors.clear_cache                           # Clears everything.
+MemoizedInflectors.clear_cache(:classify)                # Clear only the :classify cache.
+MemoizedInflectors.clear_cache(:classify, :underscore)   # Clears both the :classify and :underscore caches.
+```
+
+Calling `MemoizedInflectors.clear_cache` will clear all memoized values. The caches for each inflector method may be individually cleared by passing one or more inflector names as arguments.
+
+### Rails Environment Reload (Development)
+
+If you are using Memoized Inflectors in a Ruby on Rails application then you should be aware that the memoized values of `constantize` and `safe_constantize` become stale when the environment reloads. Such reloading happens by default when the application is running in development mode and code is modified. It is recommended to place the following code in an initializer.
+
+```ruby
+Rails.application.config.to_prepare do
+  MemoizedInflectors.clear_cache(:constantize, :safe_constantize)
+end
+```
+
 ## Benchmarks
 
 Here is a very basic benchmark to show the performance difference between memoized invocations and non-memoized.
@@ -52,6 +76,7 @@ A quick check in one of my bigger Rails projects showed that for some requests i
 
 * Allow customization of the features. E.g. let the user specify the cache store.
 * Add builds for multiple ruby versions and platforms.
+* Address the Rails environment reload issue.
 
 ## Development
 
