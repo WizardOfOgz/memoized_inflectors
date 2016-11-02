@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/WizardOfOgz/memoized_inflectors.svg?branch=master)](https://travis-ci.org/WizardOfOgz/memoized_inflectors) [![Code Climate](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors/badges/gpa.svg)](https://codeclimate.com/github/WizardOfOgz/memoized_inflectors)
 
+For use in a Rails application you should probably use the [memoized_inflectors_rails](https://github.com/WizardOfOgz/memoized_inflectors_rails) gem instead of using memoized_inflectors directly.
+
 # Memoized Inflectors
 
 This gem caches the results of ActiveSupport's String inflector methods, such as `tableize`, `constantize`, `underscore`, `pluralize`, etc. These methods are used inside Rails and are also useful for meta-programming. In the applications I analyzed the same values were being repeatedly inflected, especially across requests, and I realized that caching the results could save a lot of time and computation.
@@ -34,7 +36,9 @@ MemoizedInflectors.clear_cache(:classify, :underscore)   # Clears both the :clas
 
 Calling `MemoizedInflectors.clear_cache` will clear all memoized values. The caches for each inflector method may be individually cleared by passing one or more inflector names as arguments.
 
-### Rails Environment Reload (Development)
+### Rails Environment Reload (e.g. Development)
+
+The solution described below is now packaged up in the [memoized_inflectors_rails](https://github.com/WizardOfOgz/memoized_inflectors_rails) gem.
 
 If you are using Memoized Inflectors in a Ruby on Rails application then you should be aware that the memoized values of `constantize` and `safe_constantize` become stale when the environment reloads. Such reloading happens by default when the application is running in development mode and code is modified. It is recommended to place the following code in an initializer.
 
@@ -76,7 +80,6 @@ A quick check in one of my bigger Rails projects showed that for some requests i
 
 * Allow customization of the features. E.g. let the user specify the cache store.
 * Add builds for multiple ruby versions and platforms.
-* Address the Rails environment reload issue.
 
 ## Development
 
