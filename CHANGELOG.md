@@ -1,3 +1,11 @@
+## 1.0.0.beta-3
+
+* Correct undesired, bug-like behavior with class inflectors (constantize and safe_constantize).
+
+## 1.0.0.beta-2
+
+* Fix syntax error.
+
 ## 1.0.0.beta
 
 * Use an LRU cache.
