@@ -55,6 +55,22 @@ RSpec.describe ::MemoizedInflectors do
         expect(cached_values).to include("derp_2")      # But the second value should still be there.
       end
     end
+
+    describe "class inflector" do
+      described_class::StringMethods::CLASS_INFLECTORS.each do |class_inflector|
+        it "#{ class_inflector.inspect } works irrespective of root namespace prefix" do
+          cache = described_class.cache_for(class_inflector)
+          cache.clear
+
+          expect(cache.count).to eq(0)
+
+          "MemoizedInflectors".send(class_inflector)
+          "::MemoizedInflectors".send(class_inflector)
+
+          expect(cache.count).to eq(1)
+        end
+      end
+    end
   end
 
   describe "IntegerMethods" do
