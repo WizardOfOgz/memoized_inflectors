@@ -22,6 +22,7 @@ module MemoizedInflectors
       end
     end
 
+    # TODO: Create separate methods for class inflectors??? *
     # Define an instance method for each inflector, e.g. `signularize`, `constantize`, etc.
     (INFLECTORS | ::ActiveSupport::Inflector.instance_methods).each do |inflector|
       define_method(inflector) do |*args|
@@ -36,7 +37,15 @@ module MemoizedInflectors
           if cache.has_key?(key)
             cache[key]
           else
-            cache[key] = super(*args)
+            # Result is not cached. First fetch the result by calling the super method.
+            result = super(*args)
+
+            # Cache the result unless the result is nil and the inflector result is
+            # expected to be a class. The reason for the exception is that return
+            # value of `safe_constantize` may change from `nil` to another value.
+            # If constants are removed then it is recommended that you clear the
+            # caches for `constantize` and `safe_constantize`
+            cache[key] = result unless result.nil? && CLASS_INFLECTORS.include?(inflector)
           end
 
         # It is not safe to dup classes and not possible to dup nil.

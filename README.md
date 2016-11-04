@@ -48,6 +48,11 @@ Rails.application.config.to_prepare do
 end
 ```
 
+## Constants
+
+If `safe_constantize` returns `nil` then the value will not be cached. This is because the return value may change from `nil` to another value over time. When you remove
+constants then it is recommended that you clear the cache for `:safe_constantize`.
+
 ## Benchmarks
 
 Here is a very basic benchmark to show the performance difference between memoized invocations and non-memoized.

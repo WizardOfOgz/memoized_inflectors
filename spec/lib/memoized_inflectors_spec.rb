@@ -70,6 +70,18 @@ RSpec.describe ::MemoizedInflectors do
           expect(cache.count).to eq(1)
         end
       end
+
+      it ":safe_constantize should not cache nil" do
+        cache = described_class.cache_for(:safe_constantize)
+        cache.clear
+
+        expect(cache.count).to eq(0)
+
+        result = "DoesNotExist".safe_constantize
+
+        expect(result).to be_nil
+        expect(cache.count).to eq(0)
+      end
     end
   end
 
