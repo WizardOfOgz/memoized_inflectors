@@ -1,3 +1,7 @@
+## 1.0.0
+
+* Added builds for multiple versions of Ruby and ActiveSupport.
+
 ## 1.0.0.beta-3
 
 * Correct undesired, bug-like behavior with class inflectors (constantize and safe_constantize).
