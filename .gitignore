@@ -2,6 +2,7 @@
 .rspec
 Gemfile.lock
 Gemfile.local
+gemfiles/*.gemfile.lock
 spec/examples.txt
 coverage/
 tmp/

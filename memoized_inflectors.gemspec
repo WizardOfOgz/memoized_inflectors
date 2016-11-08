@@ -24,4 +24,5 @@ DESCRIPTION
   s.add_dependency "lru_redux",     "~> 1.1"
 
   s.add_development_dependency "rspec", "~> 3.0"
+  s.add_development_dependency "wwtd",  "~> 1.3"
 end
